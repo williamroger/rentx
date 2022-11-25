@@ -10,6 +10,7 @@ import {
   Header,
   HeaderContent,
   TotalCars,
+  CardList,
 } from './styles';
 
 export function Home() {
@@ -21,16 +22,8 @@ export function Home() {
       price: 120,
     },
     thumbnail: 'https://freepngimg.com/thumb/audi/35227-5-audi-rs5-red.png',
-  }
-  const carData2 = {
-    brand: 'Porshe',
-    name: 'Panamera',
-    rent: {
-      period: 'Ao dia',
-      price: 340,
-    },
-    thumbnail: 'https://www.pngkit.com/png/full/237-2375888_porshe-panamera-s.png',
-  }
+  };
+
   return (
     <Container>
       <StatusBar 
@@ -50,8 +43,11 @@ export function Home() {
         </HeaderContent>
       </Header>
 
-      <Car data={carData} />
-      <Car data={carData2} />
+      <CardList 
+        data={[1, 2, 3, 4, 5, 6, 7, 8]}
+        keyExtractor={ item => String(item)}
+        renderItem={({ item }) => <Car data={carData} />}
+      />
     </Container>
   );
 }
