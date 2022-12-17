@@ -2,9 +2,11 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import { useTheme } from 'styled-components';
 
-import ArrowSvg from '../../assets/arrow.svg';
 import { BackButton } from '../../components/BackButton';
 import { Button } from '../../components/Button';
+import { Calendar } from '../../components/Calendar';
+
+import ArrowSvg from '../../assets/arrow.svg';
 
 import {
   Container,
@@ -44,7 +46,7 @@ export function Scheduling() {
           <DateInfo>
             <DateTitle>De</DateTitle>
             <Date selected={false}>
-              <DateValue></DateValue>
+              <DateValue>17/12/2022</DateValue>
             </Date>
           </DateInfo>
 
@@ -53,14 +55,14 @@ export function Scheduling() {
           <DateInfo>
             <DateTitle>Até</DateTitle>
             <Date selected={false}>
-              <DateValue></DateValue>
+              <DateValue>27/12/2022</DateValue>
             </Date>
           </DateInfo>
         </RentalPeriod>
       </Header>
 
       <Content>
-
+        <Calendar />
       </Content>
 
       <Footer>
