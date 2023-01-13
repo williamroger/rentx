@@ -51,7 +51,7 @@ export const DateTitle = styled.Text`
   text-transform: uppercase;
 `;
 
-export const Date = styled.View<DateProps>`
+export const DateWrapper = styled.View<DateProps>`
   ${({ selected, theme }) => !selected && css`
      border-bottom-width: 1px;
      border-bottom-style: solid;

@@ -51,10 +51,14 @@ export function SchedulingDetails() {
     navigation.navigate('SchedulingComplete');
   }
   
+  function handleBack() {
+    navigation.goBack();
+  }
+
   return (
     <Container>
       <Header>
-        <BackButton onPress={() => console.log('button was pressed.')}/>
+        <BackButton onPress={handleBack}/>
       </Header>
       <CarImages>
         <ImageSlider
