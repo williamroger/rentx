@@ -4,7 +4,9 @@ import { Feather } from '@expo/vector-icons';
 import { useTheme } from 'styled-components';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { format } from 'date-fns';
+import { Alert } from 'react-native';
 
+import { api } from '../../services/api';
 import { CarDTO } from '../../dtos/CarDTO';
 import { getAccessoryIcon } from '../../utils/getAccessoryIcon';
 import { getPlatformDate } from '../../utils/getPlataformDate';
@@ -40,7 +42,6 @@ import {
   RentalPriceTotal,
 } from './styles';
 
-
 interface Params {
   car: CarDTO;
   dates: string[];
@@ -60,8 +61,22 @@ export function SchedulingDetails() {
 
   const rentalTotal = Number(dates.length * car.rent.price);
 
-  function handleConfirmRental() {
-    navigation.navigate('SchedulingComplete');
+  async function handleConfirmRental() {
+    const schedulesByCar = await api.get(`/schedules_bycars/${car.id}`);
+    const unavailable_dates = [
+      ...schedulesByCar.data.unavailable_dates,
+      ...dates,
+    ];
+
+    api.put(`/schedules_bycars/${car.id}`, {
+      id: car.id,
+      unavailable_dates,
+    }).then(response => {
+      navigation.navigate('SchedulingComplete');
+    }).catch(error => {
+      Alert.alert('Não foi possível confirmar o agendamento.');
+    });
+    
   }
   
   function handleBack() {
