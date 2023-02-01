@@ -1,4 +1,5 @@
 import React from 'react';
+import Animated from 'react-native-reanimated';
 
 import {
   Container,
@@ -7,7 +8,9 @@ import {
 export function Splash() {
   return (
     <Container>
-
+      <Animated.View>
+        
+      </Animated.View>
     </Container>
   );
 }
