@@ -1,5 +1,6 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, StyleSheet } from 'react-native';
+import { useTheme } from 'styled-components';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
@@ -40,6 +41,7 @@ interface Params {
 }
 
 export function CarDetails() {
+  const theme = useTheme();
   const navigation = useNavigation();
   const route = useRoute();
   const { car } = route.params as Params;
@@ -61,6 +63,17 @@ export function CarDetails() {
     }
   });
 
+  const sliderCarsStyleAnimation = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(
+        scrollY.value,
+        [0, 150],
+        [1, 0],
+        Extrapolate.CLAMP,
+      )
+    }
+  });
+
   function handleConfirmRental() {
     navigation.navigate('Scheduling', { car });
   }
@@ -76,23 +89,30 @@ export function CarDetails() {
         translucent
         backgroundColor='transparent'
       />
-      <Animated.View style={[headerStyleAnimation]}>
+      <Animated.View style={[
+        headerStyleAnimation, 
+        styles.header, 
+        { backgroundColor: theme.colors.background_secondary } 
+      ]}>
         <Header>
           <BackButton onPress={handleBack} />
         </Header>
-        <CarImages>
-          <ImageSlider
-            imagesUrl={car.photos}
-          />
-        </CarImages>
+        <Animated.View style={sliderCarsStyleAnimation}>
+          <CarImages>
+            <ImageSlider
+              imagesUrl={car.photos}
+            />
+          </CarImages>
+        </Animated.View>
       </Animated.View>
       <Animated.ScrollView
         contentContainerStyle={{
           paddingHorizontal: 24,
-          paddingTop: getStatusBarHeight(),
+          paddingTop: getStatusBarHeight() + 160,
         }}
         showsVerticalScrollIndicator={false}
         onScroll={scrollHandler}
+        scrollEventThrottle={16}
       >
         <Details>
           <Description>
@@ -133,3 +153,11 @@ export function CarDetails() {
     </Container>
   );
 }
+
+const styles = StyleSheet.create({
+  header: {
+    position: 'absolute',
+    overflow: 'hidden',
+    zIndex: 1,
+  }
+});
