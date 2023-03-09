@@ -56,6 +56,11 @@ export function SignUpSecondStep() {
 
     // Enviar dados para API
     // Redirecionar para tela de sucesso no cadastro
+    navigation.navigate('Confirmation', {
+      title: 'Conta criada!',
+      message: `Agora é só fazer o login\n e aproveitar`,
+      nextScreenRouter: 'SignIn'
+    });
   }
 
   return (
